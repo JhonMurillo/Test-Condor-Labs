@@ -1,0 +1,69 @@
+<div id="page-title"  ng-controller="ReservaCtrl as reservaCtrl">
+    <h2>Reserva De Peliculas</h2>
+    <p></p>
+    <br>
+    <div class="content-box">        
+        <div class="button-pane button-pane-top">
+            <h3 class="float-left text-uppercase content-box-header-title btn-sm "></h3>
+        </div>
+        <div class="clearfix"></div>
+        <div class="content-box-wrapper">
+            <div class="panel-body">     
+                <div class="row">
+                    <table object-table class="hover-column" data="reservaCtrl.listaPeliculas" headers="Titulo,Cantidad,Descripcion,Director,Estado,Catalogos,Actores,Opciones"
+                           fields="titulo,cantidad,descripcion,nombreDirector,estado,catalogos,actores" search="separate" sorting="compound" selected-model="reservaCtrl.report.selected"
+                           editable="false" search="false" resize="false" select="false">
+                        <tbody>
+                            <tr style="height: 60px;">
+                                <td>{{::item.titulo}}</td>
+                                <td>{{::item.cantidad}}</td>
+                                <td>{{::item.descripcion}}</td>
+                                <td>{{::item.nombreDirector}}</td>
+                                <td>{{::item.estado}}</td>
+                                <td>{{::item.catalogos}}</td>
+                                <td>{{::item.actores}}</td>
+                                <td class="text-center opciones-table">
+                                    <a class="btn btn-primary btn-tools-table" ng-hide="{{item.estado !== 'DISPONIBLE'}}"  title="Reservar Pelicula" ng-click="$owner.reservaCtrl.onConfirmacion(item)">
+                                        <i class="glyphicon glyphicon-eye-open "></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <tfoot>
+                            <tr ng-if="$filtered.length === 0 && $owner.reservaCtrl.listaPeliculas.length !== 0">
+                                <td colspan="8">No se encontraron coincidencias</td>
+                            </tr>
+                            <tr ng-if="$owner.reservaCtrl.listaPeliculas.length === 0">
+                                <td colspan="8">Sin registros</td>
+                            </tr>
+                        </tfoot>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="myModal2" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                        <!--Modal content-->
+                        <div class="modal-content" style="margin-top: 204px; width: 414px;">
+                            <div class="modal-header">
+                                <button type="button" class="close" ng-click="reservaCtrl.onClose()" data-dismiss="modal">x</button>
+                                <h4 class="modal-title">Confirmación</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="control-group form-group">
+                                    <div class="row">
+                                        <p style="text-align: center">¿Esta seguro que desea reservar la pelicula?</p>
+                                    </div>
+                                    <div class="editable-error-block help-block" style="display: none;"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer btnCenter" style="padding-right: 125px;">
+                                <input class="btn btn-primary" type="submit" value="Si" ng-click="reservaCtrl.registrarReserva()" />
+                                <input class="btn btn-danger" type="submit" value="No" ng-click="reservaCtrl.onClose()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

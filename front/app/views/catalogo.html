@@ -1,0 +1,95 @@
+<div id="page-title"  ng-controller="CatalogoCtrl as catalogoCtrl">
+    <h2>Catalogo De Peliculas</h2>
+    <p></p>
+    <br>
+    <div class="content-box">        
+        <div class="button-pane button-pane-top">
+            <h3 class="float-left text-uppercase content-box-header-title btn-sm "></h3>
+        </div>
+        <div class="clearfix"></div>
+        <div class="content-box-wrapper">
+            <div class="panel-body">     
+                <div class="row">
+                    <table object-table class="hover-column" data="catalogoCtrl.listaCatalogos" headers="Nombre,Estado,Opciones"
+                           fields="nombre,estado" search="separate" sorting="compound" selected-model="catalogoCtrl.report.selected"
+                           editable="false" search="false" resize="false" select="false">
+                        <tbody>
+                            <tr style="height: 60px;">
+                                <td>{{::item.nombre}}</td>
+                                <td>{{::item.estado}}</td>
+                                <td class="text-center opciones-table">
+                                    <!--                                    <a class="btn btn-primary btn-tools-table" title="Ver Detalle" ng-click="$owner.catalogoCtrl.onClickToVerDetalleTipoConvenio(item)">
+                                                                            <i class="glyphicon glyphicon-eye-open "></i>
+                                                                        </a>-->
+                                    <a class="btn btn-info btn-tools-table" title="Ver Peliculas" ng-click="$owner.catalogoCtrl.onVerPeliculas(item)">
+                                        <i class="glyphicon glyphicon-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <tfoot>
+                            <tr ng-if="$filtered.length === 0 && $owner.catalogoCtrl.listaCatalogos.length !== 0">
+                                <td colspan="4">No se encontraron coincidencias</td>
+                            </tr>
+                            <tr ng-if="$owner.catalogoCtrl.listaCatalogos.length === 0">
+                                <td colspan="4">Sin registros</td>
+                            </tr>
+                        </tfoot>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <!--Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">x</button>
+                                <h4 class="modal-title">Peliculas</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="control-group form-group">
+                                    <div class="row">
+                                        <table object-table class="hover-column" data="catalogoCtrl.listaPeliculas" headers="Titulo,Cantidad,Descripcion,Director,Actores,Estado"
+                                               fields="titulo,cantidad,descripcion,nombreDirector,actores,estado" search="separate" sorting="compound" selected-model="catalogoCtrl.report.selected"
+                                               editable="false" search="false" resize="false" select="false">
+                                            <tbody>
+                                                <tr style="height: 60px;">
+                                                    <td>{{::item.titulo}}</td>
+                                                    <td>{{::item.cantidad}}</td>
+                                                    <td>{{::item.descripcion}}</td>
+                                                    <td>{{::item.nombreDirector}}</td>
+                                                    <td>{{::item.actores}}</td>
+                                                    <td>{{::item.estado}}</td>
+<!--                                                    <td class="text-center opciones-table">
+                                                                                            <a class="btn btn-primary btn-tools-table" title="Ver Detalle" ng-click="$owner.catalogoCtrl.onClickToVerDetalleTipoConvenio(item)">
+                                                                                                <i class="glyphicon glyphicon-eye-open "></i>
+                                                                                            </a>
+                                                        <a class="btn btn-info btn-tools-table" title="Ver Peliculas" ng-click="$owner.catalogoCtrl.onVerPeliculas(item)">
+                                                            <i class="glyphicon glyphicon-edit"></i>
+                                                        </a>
+                                                    </td>-->
+                                                </tr>
+                                            <tfoot>
+                                                <tr ng-if="$filtered.length === 0 && $owner.catalogoCtrl.listaPeliculas.length !== 0">
+                                                    <td colspan="5">No se encontraron coincidencias</td>
+                                                </tr>
+                                                <tr ng-if="$owner.catalogoCtrl.listaPeliculas.length === 0">
+                                                    <td colspan="5">Sin registros</td>
+                                                </tr>
+                                            </tfoot>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            <div class="modal-footer btnCenter" style="padding-right: 125px;">
+                                <input class="btn btn-primary" type="submit" value="Admitir" ng-click="adCtrl.onAdmitir()" />
+                                <input class="btn btn-warning" type="submit" value="Rechazar" ng-click="adCtrl.onRechazar()" id="btnCancelModal" />
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

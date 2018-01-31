@@ -1,0 +1,61 @@
+<div id="page-title"  ng-controller="ReservaCtrl as reservaCtrl">
+    <h2>Mis Reservas</h2>
+    <p></p>
+    <br>
+    <div class="content-box">        
+        <div class="button-pane button-pane-top">
+            <h3 class="float-left text-uppercase content-box-header-title btn-sm "></h3>
+        </div>
+        <div class="clearfix"></div>
+        <div class="content-box-wrapper">
+            <div class="panel-body">     
+                <div class="row">
+                    <table object-table class="hover-column" data="reservaCtrl.listaReservas" headers="Titulo,Fecha Reserva,Fecha Entrega,estado"
+                           fields="titulo,fechaReserva,fechaEntrega,estado" search="separate" sorting="compound" selected-model="reservaCtrl.report.selected"
+                           editable="false" search="false" resize="false" select="false">
+                        <tbody>
+                            <tr style="height: 60px;">
+                                <td>{{::item.titulo}}</td>
+                                <td>{{::item.fechaReserva}}</td>
+                                <td>{{::item.fechaEntrega}}</td>
+                                <td>{{::item.estado}}</td>
+                            </tr>
+                        <tfoot>
+                            <tr ng-if="$filtered.length === 0 && $owner.reservaCtrl.listaReservas.length !== 0">
+                                <td colspan="8">No se encontraron coincidencias</td>
+                            </tr>
+                            <tr ng-if="$owner.reservaCtrl.listaReservas.length === 0">
+                                <td colspan="8">Sin registros</td>
+                            </tr>
+                        </tfoot>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="myModal2" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                        <!--Modal content-->
+                        <div class="modal-content" style="margin-top: 204px; width: 414px;">
+                            <div class="modal-header">
+                                <button type="button" class="close" ng-click="reservaCtrl.onClose()" data-dismiss="modal">x</button>
+                                <h4 class="modal-title">Confirmación</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="control-group form-group">
+                                    <div class="row">
+                                        <p style="text-align: center">¿Esta seguro que desea reservar la pelicula?</p>
+                                    </div>
+                                    <div class="editable-error-block help-block" style="display: none;"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer btnCenter" style="padding-right: 125px;">
+                                <input class="btn btn-primary" type="submit" value="Si" ng-click="reservaCtrl.registrarReserva()" />
+                                <input class="btn btn-danger" type="submit" value="No" ng-click="reservaCtrl.onClose()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

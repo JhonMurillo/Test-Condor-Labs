@@ -1,0 +1,259 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css(.) styles/vendor.css -->
+        <!-- bower:css -->
+        <!--<link rel="stylesheet" href="bower_components/sass-bootstrap/dist/css/bootstrap.css" />-->
+        <link href="styles/assets/widgets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="bower_components/angular-growl-v2/build/angular-growl.css" />
+        <link rel="stylesheet" href="bower_components/sweetalert2/dist/sweetalert2.css" />
+        <link rel="stylesheet" href="bower_components/bootstrap-sweetalert/dist/sweetalert.css" />
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.scss">
+        <link href="bower_components/angular-object-table/build/object-table-style.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="styles/assets/widgets/jgrowl-notifications/jgrowl.css">
+        <!-- endbuild -->
+    </head>
+    <body ng-app="appDApp">
+        <!--[if lte IE 8]>
+          <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <div ng-controller="LoginCtrl as loginCtrl">
+            <div class="header">
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#/">Video Capitol</a>
+                        </div>
+
+                        <div class="collapse navbar-collapse"   ng-if="loginCtrl.usuario.visibleLogin" id="js-navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#/">Inicio</a></li>
+                                <li><a ng-href="#/catalogo">Catalogo De Peliculas</a></li>
+                                <li><a ng-href="#/reserva">Reserva De Peliculas</a></li>
+                                <li><a ng-href="#/misreservas">Mis Reservas</a></li>
+                                <li><a style="cursor: pointer" ng-click="loginCtrl.logout()"><strong>Cerrar Sesion</strong></a></li>
+                            </ul>
+                        </div>
+                        <div class="collapse navbar-collapse"   ng-if="!loginCtrl.usuario.visibleLogin" id="js-navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a style="cursor: pointer" ng-click="loginCtrl.registrese()">Registrese</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-uppercase text-right" ng-if="loginCtrl.usuario.visibleLogin" style="margin-right: 15px;font-size: 20px"><strong>{{loginCtrl.usuario.usuarioLogin.nombre}}</strong></div>
+            </div>
+
+            <div class="container">
+                <div ng-view="" ng-if="loginCtrl.usuario.visibleLogin"></div>
+                <div class="content-box-wrapper" ng-if="!loginCtrl.usuario.visibleLogin">
+                    <div class="panel-body"> 
+                        <fieldset>
+                            <legend>Inicio De Sesión</legend>
+                            <div class="row">
+                                <form  method="POST" name="formLogin" novalidate>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="userName" class="control-label">Usuario</label><label class="text-danger">*</label>
+                                                <input type="text" maxlength="50"  id="userName"  class="form-control text-lowercase" 
+                                                       name="userName" mask='H' repeat='50' restrict='reject'
+                                                       ng-model="loginCtrl.usuario.email" required >
+                                                <div ng-show="(formLogin.$submitted || formLogin.userName.$touched) && formLogin.userName.$invalid">
+                                                    <span ng-show="formLogin.userName.$error.required" class=" text-danger">Campo Requerido.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="password" class="control-label">Password</label><label class="text-danger">*</label>
+                                                <input type="password" maxlength="100" id="password"  class="form-control" 
+                                                       name="password" 
+                                                       ng-model="loginCtrl.usuario.contrasenhia" required>
+                                                <div ng-show="(formLogin.$submitted || formLogin.password.$touched) && formLogin.password.$invalid">
+                                                    <span ng-show="formLogin.password.$error.required" class=" text-danger">Campo Requerido.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                       
+                                    <div class="button-pane">
+                                        <input type="submit" class="btn btn-success"  value="Login" ng-click="loginCtrl.autenticar()">
+                                    </div>
+                                </form>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="footer" style="position: fixed; bottom: 0px">
+                    <div class="container">
+                        <p><span class="glyphicon glyphicon-copyright-mark"></span> Jhon Mario Murillo Cordoba</p>
+                    </div>
+                </div>
+            </div>
+            <div id="registrese" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <!--Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" ng-click="loginCtrl.onClose()" data-dismiss="modal">x</button>
+                            <h4 class="modal-title">Registrese!!!</h4>
+                        </div>
+                        <form  method="POST" name="formRegistrese" novalidate>
+                            <div class="modal-body">
+                                <div class="control-group form-group">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="nombre" class="control-label">Nombre</label><label class="text-danger">*</label>
+                                                <input type="text" maxlength="50"  id="nombre"  class="form-control text-uppercase" 
+                                                       name="nombre" mask='H' repeat='50' restrict='reject'
+                                                       ng-model="loginCtrl.cliente.nombre" required >
+                                                <div ng-show="(formRegistrese.$submitted || formRegistrese.nombre.$touched) && formRegistrese.nombre.$invalid">
+                                                    <span ng-show="formRegistrese.nombre.$error.required" class=" text-danger">Campo Requerido.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="rut" class="control-label">Identificación</label><label class="text-danger">*</label>
+                                                <input type="number"  id="rut"  class="form-control" 
+                                                       name="rut" maxlength="20" ng-maxlength="20"
+                                                       ng-model="loginCtrl.cliente.rut" required >
+                                                <div ng-show="(formRegistrese.$submitted || formRegistrese.rut.$touched) && formRegistrese.rut.$invalid">
+                                                    <span ng-show="formRegistrese.rut.$error.required" class=" text-danger">Campo Requerido.</span>
+                                                    <span ng-show="formRegistrese.rut.$error.number" class=" text-danger">Identificación no valida.</span>
+                                                    <span ng-show="formRegistrese.rut.$error.maxlength" class="text-danger">Identificación debe tener maximo 20 digitos.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="direccion" class="control-label">Dirección</label><label class="text-danger">*</label>
+                                                <input type="text" maxlength="50"  id="direccion"  class="form-control" 
+                                                       name="direccion" mask='H' repeat='50' restrict='reject' 
+                                                       ng-model="loginCtrl.cliente.direccion" required >
+                                                <div ng-show="(formRegistrese.$submitted || formRegistrese.direccion.$touched) && formRegistrese.direccion.$invalid">
+                                                    <span ng-show="formRegistrese.direccion.$error.required" class=" text-danger">Campo Requerido.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="telefono" class="control-label">Teléfono</label><label class="text-danger">*</label>
+                                                <input type="number"  id="telefono"  class="form-control" 
+                                                       name="telefono" maxlength="10" mask='999 999 9999'  restrict='reject'
+                                                       ng-model="loginCtrl.cliente.telefono" required  ng-minlength="7" ng-maxlength="10">
+                                                <div ng-show="(formRegistrese.$submitted || formRegistrese.telefono.$touched) && formRegistrese.telefono.$invalid">
+                                                    <span ng-show="formRegistrese.telefono.$error.required" class=" text-danger">Campo Requerido.</span>
+                                                    <span ng-show="formRegistrese.telefono.$error.minlength" class="text-danger">Teléfono debe tener minimo 7 digitos.</span>
+                                                    <span ng-show="formRegistrese.telefono.$error.maxlength" class="text-danger">Teléfono debe tener maximo 10 digitos.</span>
+                                                    <span ng-show="formRegistrese.telefono.$error.number" class="text-danger">Teléfono no valido.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="email" class="control-label">Email</label><label class="text-danger">*</label>
+                                                <input type="email" maxlength="50"  id="email"  class="form-control text-lowercase" 
+                                                       name="email" mask='H' repeat='50' restrict='reject'
+                                                       ng-model="loginCtrl.cliente.email" required >
+                                                <div ng-show="(formRegistrese.$submitted || formRegistrese.email.$touched) && formRegistrese.email.$invalid">
+                                                    <span ng-show="formRegistrese.email.$error.required" class=" text-danger">Campo Requerido.</span>
+                                                    <span ng-show="formRegistrese.email.$error.email" class=" text-danger">Email no valido.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="contrasenhia" class="control-label">Password</label><label class="text-danger">*</label>
+                                                <input type="password"  id="contrasenhia"  class="form-control" 
+                                                       name="contrasenhia" 
+                                                       ng-model="loginCtrl.cliente.contrasenhia" required >
+                                                <div ng-show="(formRegistrese.$submitted || formRegistrese.contrasenhia.$touched) && formRegistrese.contrasenhia.$invalid">
+                                                    <span ng-show="formRegistrese.contrasenhia.$error.required" class=" text-danger">Campo Requerido.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer btnCenter">
+                                <input class="btn btn-primary" type="submit" value="Registrese" ng-click="loginCtrl.registrarCliente()" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+            <!--            <script>
+                            !function (A, n, g, u, l, a, r) {
+                            A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {
+                            (A[l].q = A[l].q || []).push(arguments)
+                            }, A[l].l = + new Date, a = n.createElement(g),
+                                    r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)
+                            }(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+                            ga('create', 'UA-XXXXX-X');
+                            ga('send', 'pageview');
+                        </script>-->
+            <!-- build:js(.) scripts/vendor.js -->
+            <!-- bower:js -->
+            <script src="bower_components/jquery/dist/jquery.js"></script>
+            <script src="bower_components/angular/angular.js"></script>
+            <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+            <script src="bower_components/angular-animate/angular-animate.js"></script>
+            <script src="bower_components/angular-aria/angular-aria.js"></script>
+            <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+            <script src="bower_components/angular-messages/angular-messages.js"></script>
+            <script src="bower_components/angular-resource/angular-resource.js"></script>
+            <script src="bower_components/angular-route/angular-route.js"></script>
+            <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+            <script src="bower_components/angular-touch/angular-touch.js"></script>
+            <script src="bower_components/sass-bootstrap/dist/js/bootstrap.js"></script>
+            <script src="bower_components/satellizer/dist/satellizer.js"></script>
+            <script src="bower_components/angular-growl-v2/build/angular-growl.js"></script>
+            <script src="bower_components/angular-object-table/build/object-table.js"></script>
+            <script src="bower_components/es6-promise/es6-promise.js"></script>
+            <script src="bower_components/sweetalert2/dist/sweetalert2.js"></script>
+            <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+            <script src="bower_components/bootstrap-sweetalert/dist/sweetalert.js"></script>
+            <!-- endbower -->
+            <!-- endbuild -->
+
+            <!-- build:js({.tmp,app}) scripts/scripts.js -->
+            <script src="app.js" type="text/javascript"></script>
+            <script src="modules/services/service.module.js" type="text/javascript"></script>
+            <script src="modules/directives/directive.module.js" type="text/javascript"></script>
+            <script src="controllers/main.js" type="text/javascript"></script>
+            <script src="controllers/login.controller.js" type="text/javascript"></script>
+            <script src="services/login.service.js" type="text/javascript"></script>
+            <script src="controllers/catalogo.controller.js" type="text/javascript"></script>
+            <script src="services/catalogo.service.js" type="text/javascript"></script>
+            <script src="controllers/reserva.controller.js" type="text/javascript"></script>
+            <script src="services/reserva.service.js" type="text/javascript"></script>
+            <!-- endbuild -->
+    </body>
+</html>

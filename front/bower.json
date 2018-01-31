@@ -1,0 +1,37 @@
+{
+  "name": "app-d",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "^1.4.0",
+    "bootstrap-sass-official": "^3.2.0",
+    "angular-animate": "^1.4.0",
+    "angular-aria": "^1.4.0",
+    "angular-cookies": "^1.4.0",
+    "angular-messages": "^1.4.0",
+    "angular-resource": "^1.4.0",
+    "angular-route": "^1.4.0",
+    "angular-sanitize": "^1.4.0",
+    "angular-touch": "^1.4.0",
+    "sass-bootstrap": "^3.0.2",
+    "satellizer": "^0.15.1",
+    "angular-growl-v2": "^0.7.9",
+    "angular-object-table": "^0.2.2",
+    "sweetalert2": "^4.1.0",
+    "angular-local-storage": "^0.5.2",
+    "bootstrap-sweetalert": "^1.0.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.0"
+  },
+  "appPath": "app",
+  "moduleName": "appDApp",
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  }
+}
