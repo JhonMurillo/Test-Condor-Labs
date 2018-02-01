@@ -6,8 +6,10 @@
 package com.app.controller;
 
 import com.app.dto.ProviderDTO;
+import com.app.dto.SpecialtyDTO;
 import com.app.exceptions.ProviderNotFoundException;
 import com.app.model.Provider;
+import com.app.model.Specialty;
 import com.app.service.ProviderService;
 import com.app.utils.ObjectMapperUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,15 +53,19 @@ public class ProviderController {
 
     @RequestMapping(value = "all", method = RequestMethod.GET)
     public List<ProviderDTO> listado() {
-        List<ProviderDTO> listProviderDTO = new ArrayList<>();
         try {
-            for (Provider provider : providerService.findAll()) {
-                listProviderDTO.add(objectMapper.convertValue(provider, ProviderDTO.class));
-            }
+            List<ProviderDTO> listProviderDTO = new ArrayList<>();
+            providerService.findAll().stream().map((provider) -> {
+                SpecialtyDTO specialtyDTO = objectMapper.convertValue(provider.getSpecialty(), SpecialtyDTO.class);
+                ProviderDTO providerDTO = objectMapper.convertValue(provider, ProviderDTO.class);
+                providerDTO.setSpecialtyDTO(specialtyDTO);
+                return providerDTO;
+            }).forEachOrdered((providerDTO) -> {
+                listProviderDTO.add(providerDTO);
+            });
             return listProviderDTO;
         } catch (IllegalArgumentException ex) {
-            listProviderDTO = new ArrayList<>();
-            return listProviderDTO;
+            return new ArrayList<>();
         }
     }
 
@@ -68,8 +74,16 @@ public class ProviderController {
     @ApiOperation(value = "Save ProviderDTO", notes = "Return ResponseUtil")
     public Response saveProvider(@RequestBody @Valid ProviderDTO providerDTO) {
         try {
+            Specialty specialty = objectMapper.convertValue(providerDTO.getSpecialtyDTO(), Specialty.class);
             Provider provider = objectMapper.convertValue(providerDTO, Provider.class);
-            return Response.ok().entity(new GenericEntity<ProviderDTO>(objectMapper.convertValue(providerService.saveOrUpdateProvider(provider), ProviderDTO.class)) {
+            provider.setSpecialty(specialty);
+            provider = providerService.saveOrUpdateProvider(provider);
+            specialty = provider.getSpecialty();
+
+            SpecialtyDTO specialtyDTO = objectMapper.convertValue(specialty, SpecialtyDTO.class);
+            providerDTO = objectMapper.convertValue(provider, ProviderDTO.class);
+            providerDTO.setSpecialtyDTO(specialtyDTO);
+            return Response.ok().entity(new GenericEntity<ProviderDTO>(providerDTO) {
             }).build();
         } catch (Exception ex) {
             return Response.serverError().entity(providerDTO).build();
@@ -80,12 +94,20 @@ public class ProviderController {
     @ApiOperation(value = "Update ProviderDTO", notes = "Return ResponseUtil")
     public Response uptadeProvider(@RequestBody @Valid ProviderDTO providerDTO) {
         try {
-            if (validProvider(providerDTO.getUuid()) != null) {
+            if (validProvider(providerDTO.getId()) != null) {
+                Specialty specialty = objectMapper.convertValue(providerDTO.getSpecialtyDTO(), Specialty.class);
                 Provider provider = objectMapper.convertValue(providerDTO, Provider.class);
-                return Response.ok().entity(new GenericEntity<ProviderDTO>(objectMapper.convertValue(providerService.saveOrUpdateProvider(provider), ProviderDTO.class)) {
+                provider.setSpecialty(specialty);
+                provider = providerService.saveOrUpdateProvider(provider);
+                specialty = provider.getSpecialty();
+
+                SpecialtyDTO specialtyDTO = objectMapper.convertValue(specialty, SpecialtyDTO.class);
+                providerDTO = objectMapper.convertValue(provider, ProviderDTO.class);
+                providerDTO.setSpecialtyDTO(specialtyDTO);
+                return Response.ok().entity(new GenericEntity<ProviderDTO>(providerDTO) {
                 }).build();
             } else {
-                throw new ProviderNotFoundException(providerDTO.getUuid());
+                throw new ProviderNotFoundException(providerDTO.getId());
             }
         } catch (Exception ex) {
             return Response.serverError().tag(ex.getMessage()).build();

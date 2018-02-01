@@ -2,33 +2,59 @@ package com.app.model;
 
 import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "provider")
-public class Provider{
+@Document(collection = "providers")
+public class Provider {
 
     @Id
-    @NotNull
-    private String uuid;
-    @NotNull
-    private String nombre;
-    @NotNull
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String middleName;
     private String email;
+    private Integer employerId;
+    private String providerType;
+    private String staffStatus;
+    private Integer assignedTo;
+    private String status;
+    private Integer createdBy;
+    private Integer updatedBy;
+    private String projectedStartDate;
+    @DBRef
+    private Specialty specialty;
 
-    public String getUuid() {
-        return uuid;
+    public String getId() {
+        return id;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public String getEmail() {
@@ -39,4 +65,75 @@ public class Provider{
         this.email = email;
     }
 
+    public Integer getEmployerId() {
+        return employerId;
+    }
+
+    public void setEmployerId(Integer employerId) {
+        this.employerId = employerId;
+    }
+
+    public String getProviderType() {
+        return providerType;
+    }
+
+    public void setProviderType(String providerType) {
+        this.providerType = providerType;
+    }
+
+    public String getStaffStatus() {
+        return staffStatus;
+    }
+
+    public void setStaffStatus(String staffStatus) {
+        this.staffStatus = staffStatus;
+    }
+
+    public Integer getAssignedTo() {
+        return assignedTo;
+    }
+
+    public void setAssignedTo(Integer assignedTo) {
+        this.assignedTo = assignedTo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public String getProjectedStartDate() {
+        return projectedStartDate;
+    }
+
+    public void setProjectedStartDate(String projectedStartDate) {
+        this.projectedStartDate = projectedStartDate;
+    }
+
+    public Specialty getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(Specialty specialty) {
+        this.specialty = specialty;
+    }
 }

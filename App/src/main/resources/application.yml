@@ -1,0 +1,18 @@
+## YAML Template.
+---
+info:
+  component: Test Condor Labs
+# Server
+server:
+    port: 8090
+# DB
+spring:
+    data: 
+        mongodb:
+            database: foundation-test1
+            host: ds125146.mlab.com 
+            port: 25146
+            username: foundation123
+            password: foundation123
+                
+            
