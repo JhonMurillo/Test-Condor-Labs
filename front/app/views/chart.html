@@ -1,0 +1,39 @@
+<div id="page-title"  ng-controller="ChartCtrl as chartCtrl">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="orange">
+                    <i class="material-icons">content_copy</i>
+                </div>
+                <div class="card-content">
+                    <p class="category"></p>
+                    <h3 class="title">{{chartCtrl.totalAverageResponse}}
+                        <small>MS</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons text-danger">warning</i>
+                        <a>Total Average Response Time</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row border-gray-dark">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <canvas id="chartAverageResponseTimePerDay" width="500" height="500"></canvas>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <canvas id="totalRequestsPerMachine" width="500" height="500"></canvas>
+        </div>
+    </div>
+    
+    <div class="row border-gray-dark">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <canvas id="totalRequestsPerComplainceStatus" width="500" height="500"></canvas>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+

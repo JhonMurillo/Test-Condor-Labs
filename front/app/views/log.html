@@ -1,0 +1,87 @@
+<div id="page-title"  ng-controller="LogCtrl as logCtrl">
+    <h2>List of the Logs</h2>
+    <p></p>
+    <br>
+    <div class="content-box">        
+        <div class="row">
+            <div class="col-lg-3 col-sm-3">
+                <div class="form-group">
+                    <label for="stardate" class="control-label">Start Date Log</label>
+                    <input type="date" maxlength="50"  id="stardate"  class="form-control" 
+                           name="stardate" 
+                           ng-model="logCtrl.log.filter_dt_Start_Log">
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-3">
+                <div class="form-group">
+                    <label for="stardate" class="control-label">End Date Log</label>
+                    <input type="date" maxlength="50"  id="enddate"  class="form-control" 
+                           name="enddate" 
+                           ng-model="logCtrl.log.filter_dt_end_Log">
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-3">
+                <div class="form-group">
+                    <label for="stardate" class="control-label">State</label>
+                    <select ng-model="logCtrl.log.filter_state" name="state" id="state" class="form-control">
+                        <option value="" selected="true">--Select--</option>
+                        <option value="FL">FL</option>
+                        <option value="OH">OH</option>
+                        <option value="GA">GA</option>
+                        <option value="LA">LA</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-3">
+                <div class="form-group">
+                    <button ng-click="logCtrl.onFindLogs()" class="btn btn-white btn-round btn-just-icon btn-info">
+                        <i class="material-icons">search</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="content-box-wrapper">
+            <div class="panel-body">     
+                <div class="row">
+                    <table object-table class="hover-column" 
+                           data="logCtrl.log.listLogs" 
+                           headers="Index,State Code,Pro Code,Profession,License ID,Cycle End Date,Compliance Status,Client ID,Start Log Date,End Log Date,Environment,Machine"
+                           fields="$index,cd_cebroker_state,pro_cde,cd_profession,id_license,dt_end,ds_compl_status_returned,id_client_nbr,dt_Start_Log,dt_end_log,cd_environment,cd_machine" 
+                           search="false" 
+                           sorting="compound" 
+                           display="20"
+                           selected-model="logCtrl.report.selected"
+                           editable="false" resize="false" select="false">
+                        <tbody>
+                            <tr style="height: 60px;">
+                                <td>{{$index + 1}}</td>
+                                <td>{{::item.cd_cebroker_state}}</td>
+                                <td>{{::item.pro_cde}}</td>
+                                <td>{{::item.cd_profession}}</td>
+                                <td>{{::item.id_license}}</td>
+                                <td>{{::item.dt_end| date: 'MM/dd/yyyy HH:mm:ss '}}</td>
+                                <td>{{::item.ds_compl_status_returned}}</td>
+                                <td>{{::item.id_client_nbr}}</td>
+                                <td>{{::item.dt_Start_Log| date: 'MM/dd/yyyy HH:mm:ss '}}</td>
+                                <td>{{::item.dt_end_log| date: 'MM/dd/yyyy HH:mm:ss '}}</td>
+                                <td>{{::item.cd_environment}}</td>
+                                <td>{{::item.cd_machine}}</td>
+                            </tr>
+                        <tfoot>
+                            <tr ng-if="$filtered.length === 0 && $owner.logCtrl.log.listLogs.length !== 0">
+                                <td colspan="12">No matches were found</td>
+                            </tr>
+                            <tr ng-if="$owner.logCtrl.log.listLogs.length === 0">
+                                <td colspan="12">No Records</td>
+                            </tr>
+                        </tfoot>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
