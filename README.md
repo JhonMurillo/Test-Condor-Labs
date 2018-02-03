@@ -101,3 +101,7 @@ Node Version LTS, npm, bower, git
 	
 To navigate in the application, enter to the route http://localhost:9000/#/
 
+# Test SQL
+
+Queries for reports
+
