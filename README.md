@@ -91,7 +91,7 @@ Node(v8.9.4), npm(v5.6.0), git
 	3. cd <project route>\Test-Condor-Labs\front
 	4. run npm install -g bower@latest
 		4.1. AngularJs is chosen for the app-d project
-		![Bower](https://raw.githubusercontent.com/JhonMurillo/Test-Condor-Labs/master/bower.png "Bower").
+		![Bower](https://raw.githubusercontent.com/JhonMurillo/Test-Condor-Labs/master/bower.png)
 	5. run bower install(If the bower command doesn't work, close and open the console again.)
 	6. run npm install
 	7. run npm install -g grunt-cli yo
@@ -103,7 +103,7 @@ Node(v8.9.4), npm(v5.6.0), git
 	3. cd <project route>\Test-Condor-Labs\front
 	4. run grunt serve -f
 	
-To navigate in the application, enter to the route http://localhost:9000/#!/
+To navigate in the application, enter to the route http://localhost:9000/#/
 
 # Test SQL
 
