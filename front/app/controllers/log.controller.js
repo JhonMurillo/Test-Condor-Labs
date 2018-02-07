@@ -50,7 +50,7 @@
                 return;
             }
             logService.findLogs(logCtrl.log.filter_dt_Start_Log, logCtrl.log.filter_dt_end_Log, logCtrl.log.filter_state).then(function (data) {
-                logCtrl.log.listLogs = $filter('orderBy')(data, 'dt_Start_Log', true);
+                logCtrl.log.listLogs = $filter('orderBy')(data.data, 'dt_Start_Log', true);
                 swal.close();
             }).catch(function (e) {
                 swal({

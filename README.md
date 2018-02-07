@@ -9,7 +9,7 @@ jdk 8, Configured environment variables (JAVA_HOME)
 # Project execution
 	1. Clone repository.
 	2. Enter CMD Windows or Terminal(Linux - MacOs).
-	3. cd <project route>\Test Condor Labs\App\target
+	3. cd <project route>\Test-Condor-Labs\App\target
 	4. run java -jar App-1.0.jar
 
 # Api
@@ -82,24 +82,26 @@ Project created with Yeoman-angular 1.5
 
 # Previous Requirements
 
-Node Version LTS, npm, bower, git
+Node(v8.9.4), npm(v5.6.0), git
 
 # Dependency installation
 	
 	1. Clone repository, if you already made this step, omit.
 	2. Enter CMD Windows or Terminal(Linux - MacOs).
-	3. cd <project route>\Test Condor Labs\front
-	4. run npm install
-	5  run npm install -g grunt-cli yo 
+	3. cd <project route>\Test-Condor-Labs\front
+	4. run npm install -g bower@latest
+	5. run bower install(If the bower command doesn't work, close and open the console again.)
+	6. run npm install
+	7.  run npm install -g grunt-cli yo
 
 # Project execution
 	
 	1. Clone repository, if you already made this step, omit.
 	2. Enter CMD Windows or Terminal(Linux - MacOs).
-	3. cd <project route>\Test Condor Labs\front
+	3. cd <project route>\Test-Condor-Labs\front
 	4. run grunt serve -f
 	
-To navigate in the application, enter to the route http://localhost:9000/#/
+To navigate in the application, enter to the route http://localhost:9000/#!/
 
 # Test SQL
 

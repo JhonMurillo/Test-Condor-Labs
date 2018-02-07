@@ -12,25 +12,28 @@
 
         function executeServicesGet(urlRequest) {
             var defered = $q.defer();
-            $http.get(urlRequest).success(function (response) {
-                defered.resolve(response);
-            }).error(function (error) {
-                defered.reject(error);
-            });
+            $http({
+			  method: 'GET',
+			  url: urlRequest
+			}).then(function (response){
+				defered.resolve(response);
+			},function (error){
+				defered.reject(error);
+			});
             return defered.promise;
         }
 
         function getLogs(startdate, enddate, state) {
             var query = '';
-            if (startdate !== null || startdate === undefined || startdate === '') {
+            if (startdate !== null && startdate !== undefined && startdate !== '') {
                 var start = $filter('date')(startdate, "MM/dd/yyyy");
                 query = "startdate=" + start;
             }
-            if (enddate !== null || enddate === undefined || enddate === '') {
+            if (enddate !== null && enddate !== undefined && enddate !== '') {
                 var end = $filter('date')(enddate, "MM/dd/yyyy");
                 query = query + "&enddate=" + end;
             }
-            if (state !== null || state === undefined || state === '') {
+            if (state !== null && state !== undefined && state !== '') {
                 query = query + "&state=" + state;
             }
             var urlRequest = url + query;
