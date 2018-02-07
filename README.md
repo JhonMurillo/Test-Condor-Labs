@@ -103,7 +103,7 @@ Node(v8.9.4), npm(v5.6.0), git
 	3. cd <project route>\Test-Condor-Labs\front
 	4. run grunt serve -f
 	
-To navigate in the application, enter to the route http://localhost:9000/#!/
+To navigate in the application, enter to the route http://localhost:9000/#/
 
 # Test SQL
 
